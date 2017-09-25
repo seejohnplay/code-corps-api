@@ -72,6 +72,8 @@ defmodule CodeCorps.GitHub.Event.Issues do
     case Repo.transaction(multi) do
       {:ok, %{tasks: tasks}} -> {:ok, tasks}
       {:error, :repo, :unmatched_project, _steps} -> {:ok, []}
+      {:error, :user, :user_not_found} -> {:error, :user_not_found}
+      {:error, :user, :multiple_users} -> {:error, :multiple_users}
       {:error, _errored_step, error_response, _steps} -> {:error, error_response}
     end
   end
